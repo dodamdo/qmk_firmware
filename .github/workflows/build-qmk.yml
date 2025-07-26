@@ -1,19 +1,19 @@
-name: Build QMK Firmware
+name: Build QMK From JSON
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
@@ -23,11 +23,10 @@ jobs:
           pip install qmk
           qmk setup -y
 
-      - name: Build firmware
-        run: |
-          qmk compile -kb silakka54 -km default
+      - name: Compile firmware from JSON
+        run: qmk compile keyboard.json
 
-      - name: Upload firmware artifact
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: silakka54-uf2
