@@ -1,4 +1,4 @@
-name: Build QMK From JSON
+name: Build QMK with make
 
 on:
   push:
@@ -23,8 +23,8 @@ jobs:
           pip install qmk
           qmk setup -y
 
-      - name: Compile firmware from JSON
-        run: qmk compile keyboards/silakka54/keyboard.json
+      - name: Compile firmware using make
+        run: make silakka54:default
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
