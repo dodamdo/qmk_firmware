@@ -1,0 +1,36 @@
+name: Build QMK Firmware
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install QMK CLI
+        run: |
+          pip install qmk
+          qmk setup -y
+
+      - name: Build firmware
+        run: |
+          qmk compile -kb silakka54 -km default
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: silakka54-uf2
+          path: |
+            *.uf2
+            .build/*.uf2
