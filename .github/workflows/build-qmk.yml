@@ -24,7 +24,7 @@ jobs:
           qmk setup -y
 
       - name: Compile firmware from JSON
-        run: qmk compile keyboard.json
+        run: qmk compile keyboards/silakka54/keyboard.json
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
